@@ -3,7 +3,7 @@ package main;
 import java.lang.*;
 import java.util.*;
 
-class Customer {
+public class Customer {
     private String name;
     private Vector rentals = new Vector();
     public Customer (String newname){
@@ -16,11 +16,21 @@ class Customer {
         return name;
     };
     public String statement() {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
-        Enumeration enum_rentals = rentals.elements();	    
+       return getRentalRecord();
+    }
+
+    private String getRentalRecord() {
         String result = "main.Rental Record for " + this.getName() + "\n";
         result += "\t" + "Title" + "\t" + "\t" + "Days" + "\t" + "Amount" + "\n";
+        result += calculateRentalRecord();
+        return result;
+    }
+
+    private String calculateRentalRecord() {
+        double totalAmount = 0;
+        int frequentRenterPoints = 0;
+        Enumeration enum_rentals = rentals.elements();
+        String allRentalDates = "";
 
         while (enum_rentals.hasMoreElements()) {
             double thisAmount = 0;
@@ -28,18 +38,23 @@ class Customer {
             //determine amounts for each line
             thisAmount = amountFor(each);
             // add frequent renter points
-            frequentRenterPoints ++;
+            frequentRenterPoints = addFrequentRenterPoints(frequentRenterPoints);
             // add bonus for a two day new release rental
-            if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1) 
+            if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1)
                 frequentRenterPoints ++;
             //show figures for this rental
-            result += "\t" + each.getMovie().getTitle()+ "\t" + "\t" + each.getDaysRented() + "\t" + String.valueOf(thisAmount) + "\n";
+            allRentalDates += "\t" + each.getMovie().getTitle()+ "\t" + "\t" + each.getDaysRented() + "\t" + String.valueOf(thisAmount) + "\n";
             totalAmount += thisAmount;
         }
         //add footer lines
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
-        return result;
+        allRentalDates += "Amount owed is " + String.valueOf(totalAmount) + "\n";
+        allRentalDates += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+        return allRentalDates;
+    }
+
+    private int addFrequentRenterPoints(int frequentRenterPoints) {
+        frequentRenterPoints++;
+        return frequentRenterPoints;
     }
 
     private double amountFor(Rental each) {
