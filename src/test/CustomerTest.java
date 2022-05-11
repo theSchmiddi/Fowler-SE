@@ -34,7 +34,7 @@ public class CustomerTest {
 
     @Test
     void statement() {
-        String expected = "main.Rental Record for "+name+"\n" +
+        String expected = "Rental Record for "+name+"\n" +
                 "\t" + "Title" + "\t" + "\t" + "Days" + "\t" + "Amount" + "\n" +
                 "\t" + "Shrek" + "\t" + "\t" + "5" + "\t" + "6.5" + "\n" +
                 "\t" + "Step up" + "\t" + "\t" + "10" + "\t" + "30.0" + "\n" +
