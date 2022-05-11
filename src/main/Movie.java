@@ -6,9 +6,9 @@ public class Movie {
     public static final int NEW_RELEASE = 1;
     private String title;
     private int priceCode;
-    public Movie(String newtitle, int newpriceCode) {
-        title = newtitle;
-        priceCode = newpriceCode;
+    public Movie(String test, int priceCode) {
+        this.title = test;
+        this.priceCode = priceCode;
     }
     public int getPriceCode() {
         return priceCode;
